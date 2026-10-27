@@ -1,0 +1,38 @@
+name: captures
+on:
+  push:
+    branches: [captures]
+permissions:
+  contents: write
+jobs:
+  shot:
+    if: ${{ !contains(github.event.head_commit.message, '[raw]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install playwright && python -m playwright install --with-deps chromium
+      - run: |
+          mkdir -p raw
+          cat > shot.py <<'PY'
+          from playwright.sync_api import sync_playwright
+          sites={'professordesocials':'https://professordesocials.cat/','queestudiar':'https://queestudiar.cat/','cinepetits':'https://cinepetits.cat/','desdelsofa':'https://desdelsofa.cat/','aprendreambia':'https://aprendreambia.cat/'}
+          with sync_playwright() as p:
+              b=p.chromium.launch()
+              for name,url in sites.items():
+                  for w,h,suf in ((1440,900,''),(390,844,'-m')):
+                      try:
+                          pg=b.new_page(viewport={'width':w,'height':h},device_scale_factor=2,locale='ca-ES')
+                          pg.goto(url,wait_until='networkidle',timeout=60000)
+                          pg.wait_for_timeout(2500)
+                          pg.screenshot(path=f'raw/{name}{suf}.png')
+                          print('ok',name,suf,pg.title())
+                      except Exception as e:
+                          print('fail',name,suf,e)
+              b.close()
+          PY
+          python shot.py
+      - run: |
+          git config user.name "claude"; git config user.email "noreply@anthropic.com"
+          git add raw && git commit -m "Captures en brut [raw]" && git push
