@@ -14,5 +14,5 @@ Web estàtica publicada amb GitHub Pages des de la branca `main`.
 ## Pendent
 
 - Les captures i els clips de `media/` són provisionals. Falta el clip de desdelsofà, que es farà quan la web es publiqui.
-- Connectar l'enviament del formulari de contacte. Ara només està maquetat.
+- Si cal, afegir un formulari de contacte. Ara el contacte és només per correu.
 - Afegir el domini arapla.cat a la configuració de Pages quan estigui registrat.

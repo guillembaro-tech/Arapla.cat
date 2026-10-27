@@ -79,14 +79,8 @@ nav a{text-decoration:none}
 #contacte{border-top:1px solid var(--ink);padding:5rem 0 6rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:4rem}
 #contacte .txt{display:flex;flex-direction:column;gap:1.5rem}
 #contacte h2{margin:0;font-size:48px;font-weight:500;letter-spacing:-.025em;line-height:1.1}
-#contacte .txt p{margin:0;font-size:17px;line-height:1.6;color:var(--ink-2)}
-#contacte .txt a{font-family:var(--mono);font-size:15px}
-form{display:flex;flex-direction:column;gap:1.5rem}
-label{display:flex;flex-direction:column;gap:.5rem;font-family:var(--mono);font-size:13px;color:var(--ink-2)}
-input,select,textarea{font:16px var(--sans);color:var(--ink);padding:.75rem 0;border:0;border-bottom:1px solid var(--ink);background:var(--bg);border-radius:0;outline-color:var(--accent)}
-textarea{resize:vertical}
-button{align-self:flex-start;min-height:48px;padding:0 1.75rem;border:0;background:var(--accent);color:#fff;font:500 15px var(--sans);cursor:pointer}
-button:hover{background:#163CA8}
+#contacte .txt p{margin:0;font-size:17px;line-height:1.6;color:var(--ink-2);max-width:600px}
+#contacte .txt a{font-family:var(--mono);font-size:20px;color:var(--accent)}
 
 footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;padding:2rem 0 3rem;border-top:1px solid var(--line)}
 
@@ -218,20 +212,6 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;paddin
     <p>Explica'm breument què vols fer i per a qui. Responc tots els missatges, també quan no puc agafar l'encàrrec.</p>
     <a href="mailto:hola@arapla.cat">hola@arapla.cat</a>
   </div>
-  <!-- Formulari només maquetat. Pendent de connectar-hi l'enviament. -->
-  <form id="form" novalidate>
-    <label>Nom<input type="text" name="nom" autocomplete="name"></label>
-    <label>Correu<input type="email" name="email" autocomplete="email"></label>
-    <label>Tipus de projecte
-      <select name="tipus">
-        <option>Encàrrec comercial</option>
-        <option>Educació, cultura o entitat</option>
-        <option>Encara no ho sé</option>
-      </select>
-    </label>
-    <label>Què vols fer<textarea name="missatge" rows="4"></textarea></label>
-    <button type="button">Envia el missatge</button>
-  </form>
 </section>
 
 <footer class="mono">
