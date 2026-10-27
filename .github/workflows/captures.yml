@@ -12,32 +12,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - run: pip install playwright && python -m playwright install --with-deps chromium
+      - run: pip install playwright pillow && python -m playwright install --with-deps chromium
       - run: |
-          mkdir -p raw
-          cat > shot.py <<'PY'
-          from playwright.sync_api import sync_playwright
-          sites={'desdelsofa':'https://dev2.desdelsofa.cat/'}
-          with sync_playwright() as p:
-              b=p.chromium.launch()
-              for name,url in sites.items():
-                  for w,h,suf in ((1440,900,''),(390,844,'-m')):
-                      try:
-                          pg=b.new_page(viewport={'width':w,'height':h},device_scale_factor=2,locale='ca-ES')
-                          pg.goto(url,wait_until='load',timeout=90000)
-                          pg.wait_for_timeout(5000)
-                          for t in ('Només essencials','Rebutja','Rebutjar','Només les necessàries'):
-                              try:
-                                  pg.get_by_role('button',name=t,exact=True).first.click(timeout=1500); break
-                              except Exception: pass
-                          pg.wait_for_timeout(1500)
-                          pg.screenshot(path=f'raw/{name}{suf}.png')
-                          print('ok',name,suf,pg.title())
-                      except Exception as e:
-                          print('fail',name,suf,e); open(f'raw/{name}{suf}.txt','w').write(str(e)[:500])
-              b.close()
-          PY
-          python shot.py
+          mkdir -p clips
+          python tools/clip.py professordesocials https://professordesocials.cat/
+          ls -la clips
       - run: |
           git config user.name "claude"; git config user.email "noreply@anthropic.com"
-          git add raw && git commit -m "Captures en brut [raw]" && git push
+          git add clips && git commit -m "Clip de mostra [raw]" && git push
