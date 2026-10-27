@@ -1,6 +1,6 @@
 # arapla.cat
 
-Web de Guillem Baró. Disseny i construcció de webs WordPress.
+Portafoli d'arapla.cat. Disseny i construcció de webs WordPress.
 
 Web estàtica publicada amb GitHub Pages des de la branca `main`.
 
