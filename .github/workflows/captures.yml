@@ -16,8 +16,8 @@ jobs:
       - run: |
           mkdir -p clips
           (which ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)) > clips/log.txt 2>&1
-          python tools/clip.py professordesocials https://professordesocials.cat/ >> clips/log.txt 2>&1 || true
+          for s in queestudiar cinepetits aprendreambia; do python tools/clip.py $s https://$s.cat/ >> clips/log.txt 2>&1 || echo "fail $s" >> clips/log.txt; rm -rf frames; done
           ls -la clips >> clips/log.txt
       - run: |
           git config user.name "claude"; git config user.email "noreply@anthropic.com"
-          git add clips && git commit -m "Clip de mostra [raw]" && git push
+          git add clips && git commit -m "Clips [raw]" && git push
