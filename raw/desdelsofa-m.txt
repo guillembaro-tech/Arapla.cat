@@ -1,3 +1,0 @@
-Page.goto: Timeout 60000ms exceeded.
-Call log:
-  - navigating to "https://dev2.desdelsofa.cat/", waiting until "networkidle"

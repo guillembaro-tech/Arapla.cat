@@ -17,15 +17,15 @@ jobs:
           mkdir -p raw
           cat > shot.py <<'PY'
           from playwright.sync_api import sync_playwright
-          sites={'professordesocials':'https://professordesocials.cat/','queestudiar':'https://queestudiar.cat/','cinepetits':'https://cinepetits.cat/','desdelsofa':'https://dev2.desdelsofa.cat/','aprendreambia':'https://aprendreambia.cat/'}
+          sites={'desdelsofa':'https://dev2.desdelsofa.cat/'}
           with sync_playwright() as p:
               b=p.chromium.launch()
               for name,url in sites.items():
                   for w,h,suf in ((1440,900,''),(390,844,'-m')):
                       try:
                           pg=b.new_page(viewport={'width':w,'height':h},device_scale_factor=2,locale='ca-ES')
-                          pg.goto(url,wait_until='networkidle',timeout=60000)
-                          pg.wait_for_timeout(2000)
+                          pg.goto(url,wait_until='load',timeout=90000)
+                          pg.wait_for_timeout(5000)
                           for t in ('Només essencials','Rebutja','Rebutjar','Només les necessàries'):
                               try:
                                   pg.get_by_role('button',name=t,exact=True).first.click(timeout=1500); break
