@@ -17,7 +17,7 @@ jobs:
           mkdir -p raw
           cat > shot.py <<'PY'
           from playwright.sync_api import sync_playwright
-          sites={'professordesocials':'https://professordesocials.cat/','queestudiar':'https://queestudiar.cat/','cinepetits':'https://cinepetits.cat/','desdelsofa':'https://desdelsofa.cat/','aprendreambia':'https://aprendreambia.cat/'}
+          sites={'professordesocials':'https://professordesocials.cat/','queestudiar':'https://queestudiar.cat/','cinepetits':'https://cinepetits.cat/','desdelsofa':'https://dev2.desdelsofa.cat/','aprendreambia':'https://aprendreambia.cat/'}
           with sync_playwright() as p:
               b=p.chromium.launch()
               for name,url in sites.items():
@@ -25,11 +25,16 @@ jobs:
                       try:
                           pg=b.new_page(viewport={'width':w,'height':h},device_scale_factor=2,locale='ca-ES')
                           pg.goto(url,wait_until='networkidle',timeout=60000)
-                          pg.wait_for_timeout(2500)
+                          pg.wait_for_timeout(2000)
+                          for t in ('Només essencials','Rebutja','Rebutjar','Només les necessàries'):
+                              try:
+                                  pg.get_by_role('button',name=t,exact=True).first.click(timeout=1500); break
+                              except Exception: pass
+                          pg.wait_for_timeout(1500)
                           pg.screenshot(path=f'raw/{name}{suf}.png')
                           print('ok',name,suf,pg.title())
                       except Exception as e:
-                          print('fail',name,suf,e)
+                          print('fail',name,suf,e); open(f'raw/{name}{suf}.txt','w').write(str(e)[:500])
               b.close()
           PY
           python shot.py
