@@ -13,6 +13,6 @@ Web estàtica publicada amb GitHub Pages des de la branca `main`.
 
 ## Pendent
 
-- Afegir les captures i els clips a `media/`.
+- Les captures de `media/` són provisionals, en gris i dins d'una finestra mínima. Falten els clips `.mp4`.
 - Connectar l'enviament del formulari de contacte. Ara només està maquetat.
 - Afegir el domini arapla.cat a la configuració de Pages quan estigui registrat.
